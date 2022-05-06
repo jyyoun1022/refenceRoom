@@ -1,0 +1,34 @@
+package codeJ.referenceRoom.Lab.ManyToMany;
+
+import lombok.*;
+
+import javax.persistence.*;
+
+@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString(exclude = "movie")
+@Table(name = "tbl_poster")
+public class Poster {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long ino;
+
+    private String frame;
+
+    private int idx;    //포스트 순번
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Movie  movie;
+
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+}
