@@ -37,11 +37,11 @@ public class MovieRepositoryTest {
     @Test
     @Transactional
     @Commit
-    public void testAddPoster(){
+    public void testAddPoster() {
 
         Optional<Movie> result = repository.findById(1L);
 
-        if(result.isPresent()){
+        if (result.isPresent()) {
             Movie movie = result.get();
             movie.addPoster(Poster.builder().frame("극한직업 포스터3.jpg").build());
 
@@ -49,4 +49,16 @@ public class MovieRepositoryTest {
         }
 
     }
+    @Test
+    @Transactional
+    @Commit
+    void testRemovePoster(){
+        Optional<Movie> result = repository.findById(1L);
+        if(result.isPresent()){
+            Movie movie = result.get();
+            movie.removePoster(2L);
+            repository.save(movie);
+        }
+    }
+
 }

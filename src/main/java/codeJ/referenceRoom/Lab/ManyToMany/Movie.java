@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Entity
@@ -23,7 +24,7 @@ public class Movie extends BaseEntity{
 
 
     @Builder.Default
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Poster> posterList = new ArrayList<>();
     //여기서 @OneToMany는 Movie와 Poster의 관계를 일대다로 지정하기 위해서 사용합니다.
     //여기서 posterList라는 테이블이 새로 생성되는데 이는 @OneToMany가 기본적으로 M:N의 곽계를 구성하기 위해 처리하기 때문이다.
@@ -41,4 +42,23 @@ public class Movie extends BaseEntity{
 
     //Movie 클래스에는 List<Poster> 변수를 아예 처음부터 초기화합니다.
     //이렇게 하는 이유는 Movie객체가 JPA에서 엔티티 매니저에 의해서 관리될 때 변수에 할당된 ArrayList객체도 같이 보관되도록 하려는 의도입니다.
+
+    public void removePoster(Long ino){
+
+        Optional<Poster> result = posterList.stream().filter(p -> p.getIno() == ino).findFirst();
+
+        if(result.isPresent()){
+            Poster poster = result.get();
+            poster.setMovie(null);
+            posterList.remove(poster);
+        }
+        changeIdx();
+
+    }
+
+    private void changeIdx(){
+        for(int i=0; i < posterList.size(); i++){
+            posterList.get(i).setIdx(i);
+        }
+    }
 }
