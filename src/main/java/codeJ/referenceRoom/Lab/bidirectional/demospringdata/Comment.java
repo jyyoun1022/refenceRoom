@@ -1,13 +1,14 @@
 package codeJ.referenceRoom.Lab.bidirectional.demospringdata;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment {
 
     @Id
@@ -19,4 +20,12 @@ public class Comment {
     @ManyToOne
     private Post post;
 
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", comment='" + comment + '\'' +
+                ", post=" + post +
+                '}';
+    }
 }
