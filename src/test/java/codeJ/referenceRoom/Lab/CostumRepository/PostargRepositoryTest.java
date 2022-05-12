@@ -12,8 +12,12 @@ class PostargRepositoryTest {
     PostargRepository repository;
 
     @Test
-    void crud(){
-
+    void crud(){;
+        repository.findMyPost();
+        Postarg postarg = new Postarg();
+        postarg.setTitle("hibernate");
+        repository.save(postarg);
+        repository.delete(postarg);
     }
 
 }

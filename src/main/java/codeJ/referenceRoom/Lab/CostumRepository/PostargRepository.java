@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.swing.*;
 
-public interface PostargRepository extends JpaRepository<Postarg,Long> {
+public interface PostargRepository extends JpaRepository<Postarg,Long> ,PostCustomRepository<Postarg>{
 
 }
