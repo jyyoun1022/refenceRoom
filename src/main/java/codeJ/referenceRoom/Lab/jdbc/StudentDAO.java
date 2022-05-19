@@ -15,7 +15,7 @@ public class StudentDAO {
     private static String dbUser="codeJ";
     private static String dbPasswd="yjy^^46232891";
 
-    public Student getRole(Integer stuNo){
+    public Student getStudent(Integer stuNo){
         Student student = null;
         Connection conn = null; //DB와 연결을 위한 객체                     (연결을 맺을 객체)
         PreparedStatement ps = null;    //SQL 문을 DB에 보내기 위한 객체     (명령을 선언할 객체)
@@ -32,7 +32,7 @@ public class StudentDAO {
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPasswd);
 
 
-            String sql = "SELECT * FROM STUDENT WEHRE stu_no = ?";
+            String sql = "SELECT * FROM student WHERE stu_no = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1,stuNo); //? 파라미터 값에 setInt를 이용하여 stuNo 매핑
             rs = ps.executeQuery();//명령어 실행
@@ -42,7 +42,7 @@ public class StudentDAO {
                 String id = rs.getString("id");
                 String passwd = rs.getString("passwd");
                 String email = rs.getString("email");
-                String phoneNum = rs.getString("5");
+                String phoneNum = rs.getString("phoneNum");
                 student = new Student(stuNum,id,passwd,email,phoneNum);
                 log.info(stuNum+" "+id+" "+passwd+" "+email+" "+phoneNum);
             }
